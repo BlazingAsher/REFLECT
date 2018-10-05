@@ -28,12 +28,19 @@ function verifyToken($token){
         $id = $tokenInfo->id;
         $timeResult = sqlQuery("SELECT lastChanged from users where id='$id'");
         if($tokenInfo->issued < intval($timeResult->fetch_assoc()['lastChanged'])){
+            $tokenInfo = new stdClass();
+            $tokenInfo->id = -1;
             return $tokenInfo;
         }
         else{
             //print('Ok');
             return $tokenInfo;
         }
+    }
+    else if($tokenInfo->expires < time()){
+        $tokenInfo = new stdClass();
+        $tokenInfo->id = -1;
+        return $tokenInfo;   
     }
     else{
         //print('Ok');
