@@ -37,7 +37,7 @@ function verifyToken($token){
             return $tokenInfo;
         }
     }
-    else if($tokenInfo->expires < time()){
+    else if($tokenInfo->expiry < time()){
         $tokenInfo = new stdClass();
         $tokenInfo->id = -1;
         return $tokenInfo;   
